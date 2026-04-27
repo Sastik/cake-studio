@@ -1,0 +1,72 @@
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  user-service:
+    build:
+      context: .
+      dockerfile: services/user_service/Dockerfile
+    environment:
+      - JWT_SECRET=dev_secret_change_me
+    ports:
+      - "8001:8001"
+
+  product-service:
+    build:
+      context: .
+      dockerfile: services/product_service/Dockerfile
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - redis
+    ports:
+      - "8002:8002"
+
+  order-service:
+    build:
+      context: .
+      dockerfile: services/order_service/Dockerfile
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - redis
+    ports:
+      - "8003:8003"
+
+  notification-service:
+    build:
+      context: .
+      dockerfile: services/notification_service/Dockerfile
+    ports:
+      - "8004:8004"
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: services/api_gateway/Dockerfile
+    environment:
+      - USER_SERVICE_URL=http://user-service:8001
+      - PRODUCT_SERVICE_URL=http://product-service:8002
+      - ORDER_SERVICE_URL=http://order-service:8003
+      - NOTIFICATION_SERVICE_URL=http://notification-service:8004
+    depends_on:
+      - user-service
+      - product-service
+      - order-service
+      - notification-service
+    ports:
+      - "8000:8000"
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    environment:
+      - NGINX_API_UPSTREAM=http://api-gateway:8000
+    depends_on:
+      - api-gateway
+    ports:
+      - "8080:8080"
+
