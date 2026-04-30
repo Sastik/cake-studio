@@ -7,6 +7,8 @@ from jwt import PyJWKClient
 import os
 import random
 import time
+import smtplib
+from email.mime.text import MIMEText
 
 from services.common.settings import settings
 from services.common.security import create_access_token, verify_token
@@ -93,8 +95,24 @@ def _generate_code() -> str:
 
 
 def _send_email_otp_stub(email: str, code: str):
-    # Stub: integrate a real provider later (SendGrid/Mailgun/SES).
-    print(f"[otp] email={email} code={code}")
+    sender_email = os.getenv("GMAIL_EMAIL")
+    app_password = os.getenv("GMAIL_APP_PASSWORD")
+
+    subject = "Your OTP Code"
+    body = f"Your OTP is: {code}. It expires in 10 minutes."
+
+    msg = MIMEText(body)
+    msg["Subject"] = subject
+    msg["From"] = sender_email
+    msg["To"] = email
+
+    try:
+        with smtplib.SMTP("smtp.gmail.com", 587) as server:
+            server.starttls()
+            server.login(sender_email, app_password)
+            server.sendmail(sender_email, email, msg.as_string())
+    except Exception as e:
+        print("Email send failed:", e)
 
 
 def _seed_admin():

@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, EmailStr
 
 
 class WhatsAppNotification(BaseModel):
@@ -10,4 +10,9 @@ class NotificationResult(BaseModel):
     ok: bool = True
     provider: str = "stub"
     queued: bool = True
+
+class EmailNotification(BaseModel):
+    to_email: EmailStr
+    subject: str
+    message: str
 
