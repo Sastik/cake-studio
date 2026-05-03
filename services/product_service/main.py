@@ -7,9 +7,9 @@ from pathlib import Path
 import json
 import time
 
-from common.common.settings import settings
-from common.common.redis_client import get_redis
-from common.common.security import verify_token
+from common.settings import settings
+from common.redis_client import get_redis
+from common.security import verify_token
 # from services.common.redis_client import get_redis
 # from services.common.settings import settings
 # from services.common.security import verify_token
