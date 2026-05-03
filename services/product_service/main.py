@@ -7,9 +7,12 @@ from pathlib import Path
 import json
 import time
 
-from services.common.redis_client import get_redis
-from services.common.settings import settings
-from services.common.security import verify_token
+from services.common.common.settings import settings
+from services.common.common.redis_client import get_redis
+from services.common.common.security import verify_token
+# from services.common.redis_client import get_redis
+# from services.common.settings import settings
+# from services.common.security import verify_token
 from .schemas import Product, ProductCreate, ProductUpdate
 
 app = FastAPI(title="Product Service", version="0.1.0")
