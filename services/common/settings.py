@@ -1,7 +1,6 @@
 from pydantic import BaseModel
 import os
 
-
 class Settings(BaseModel):
     service_name: str = "service"
     jwt_secret: str = os.getenv("JWT_SECRET", "dev_secret_change_me")
