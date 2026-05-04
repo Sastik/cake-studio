@@ -6,11 +6,10 @@ from uuid import uuid4
 from pathlib import Path
 import json
 import time
-
 from common.settings import settings
 from common.redis_client import get_redis
 from common.security import verify_token
-from .schemas import Product, ProductCreate, ProductUpdate
+from schemas import (Product, ProductCreate, ProductUpdate)
 
 app = FastAPI(title="Product Service", version="0.1.0")
 app.add_middleware(

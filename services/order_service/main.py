@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from uuid import uuid4
 from time import time
 
-from .schemas import OrderCreate, Order
+from schemas import (OrderCreate, Order)
 
 app = FastAPI(title="Order Service", version="0.1.0")
 app.add_middleware(

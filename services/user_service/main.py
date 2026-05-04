@@ -11,8 +11,6 @@ import smtplib
 from email.mime.text import MIMEText
 from common.settings import settings
 from common.security import create_access_token, verify_token
-# from services.common.settings import settings
-# from services.common.common.security import create_access_token, verify_token
 from schemas import (
     RegisterRequest,
     LoginRequest,
