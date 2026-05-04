@@ -6,4 +6,5 @@ PyJWT==2.9.0
 python-multipart==0.0.9
 redis==5.0.8
 setuptools==79.0.1
-sib-api-v3-sdk==8.0.0
+sib-api-v3-sdk
+pydantic[email]
